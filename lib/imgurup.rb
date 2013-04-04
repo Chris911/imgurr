@@ -1,7 +1,7 @@
 # coding: utf-8
 
 begin
-  require 'rubygems'
+	require 'rubygems'
 rescue LoadError
 end
 
@@ -15,5 +15,5 @@ $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 require 'imgurup/command'
 
 module Imgurup
-  VERSION = '0.0.1'
+	VERSION = '0.0.1'
 end

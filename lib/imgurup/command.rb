@@ -100,7 +100,7 @@ module Imgurup
           - imgurup: help ---------------------------------------------------
 
           all other documentation is located at:
-            https://github.com/Chris911/imgurup
+          https://github.com/Chris911/imgurup
         }.gsub(/^ {8}/, '') # strip the first eight spaces of every line
 
         output text
