@@ -7,7 +7,7 @@
 # Highly inspired by @holman/boom
 #
 
-module Imgur
+module Imgurup
   class Command
     class << self
       

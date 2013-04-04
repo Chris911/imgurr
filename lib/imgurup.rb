@@ -6,12 +6,14 @@ rescue LoadError
 end
 
 # External require
+require 'net/http'
+require 'json'
 
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 # Internal require
 require 'imgurup/command'
 
-module Boom
+module Imgurup
   VERSION = '0.0.1'
 end
