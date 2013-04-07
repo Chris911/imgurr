@@ -44,6 +44,7 @@ module Imgurr
         return help              if command == 'help'
         return help              if command[0] == 45 || command[0] == '-' # any - dash options are pleas for help
         return upload(major)     if command == 'upload' || command == 'up' || command == 'u'
+        return info(major)       if command == 'info' || command == 'i'
 
       end
 
@@ -58,6 +59,14 @@ module Imgurr
         response = ImgurAPI.upload(major)
         puts response if response.start_with?('Imgur Error')
         puts "Copied #{Platform.copy(response)} to clipboard" if response.start_with?('http')
+      end
+
+      # Public: Get image info
+      #
+      # Returns nothing
+      def info(major)
+        response = ImgurAPI.get_info(major)
+        puts response
       end
 
       # Public: the version of boom that you're currently running.

@@ -14,13 +14,14 @@ require 'json'
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 # Internal require
-require 'imgurr/command'
 require 'imgurr/color'
+require 'imgurr/numbers'
 require 'imgurr/imgurAPI'
 require 'imgurr/platform'
 require 'imgurr/imgurErrors'
+require 'imgurr/command'
 
 module Imgurr
 	VERSION = '0.0.1'
-  DEBUG   = true
+  DEBUG   = false
 end
