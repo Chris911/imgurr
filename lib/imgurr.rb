@@ -8,8 +8,8 @@ end
 # External require
 require 'net/http'
 require 'net/https'
+require 'open-uri'
 require 'json'
-require 'openssl'
 
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 

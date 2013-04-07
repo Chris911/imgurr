@@ -45,7 +45,10 @@ module Imgurr
       def handle_response(response)
         data = JSON.parse(response)
         puts JSON.pretty_unparse(data) if Imgurr::DEBUG
-        data['data']['link'] if(data['success'])
+        if data['success']
+          return data['data']['link']
+        end
+        ImgurErrors.handle_error(response)
       end
 
     end

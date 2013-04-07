@@ -25,16 +25,6 @@ module Imgurr
         delegate(command, major, minor)
       end
 
-      # Public: prints any given string.
-      #
-      # s = String output
-      #
-      # Prints to STDOUT and returns. This method exists to standardize output
-      # and for easy mocking or overriding.
-      def output(s)
-        puts(s)
-      end
-
       # Public: gets $stdin.
       #
       # Returns the $stdin object. This method exists to help with easy mocking
@@ -47,11 +37,12 @@ module Imgurr
       #
       # Returns output based on method calls.
       def delegate(command, major, minor)
-        return version           if command == '-v'
+        return help unless command
+        return no_internet       unless self.internet_connection?
+
         return version           if command == '--version'
         return help              if command == 'help'
         return help              if command[0] == 45 || command[0] == '-' # any - dash options are pleas for help
-        return echo(major,minor) if command == 'echo' || command == 'e'
         return upload(major)     if command == 'upload' || command == 'up' || command == 'u'
 
       end
@@ -60,8 +51,12 @@ module Imgurr
       # 
       # Returns nothing
       def upload(major)
+        unless File.exist?(major)
+          puts "File #{major} not found."
+          return
+        end
         response = ImgurAPI.upload(major)
-        puts response if response.start_with?('Error')
+        puts response if response.start_with?('Imgur Error')
         puts "Copied #{Platform.copy(response)} to clipboard" if response.start_with?('http')
       end
 
@@ -79,6 +74,24 @@ module Imgurr
         #Platform.edit(account.json_file)
       end
 
+      # Public: Checks is there's an active internet connection
+      #
+      # Returns true or false
+      def internet_connection?
+        begin
+          true if open("http://www.google.com/")
+        rescue
+          false
+        end
+      end
+
+      # Public: No internet error
+      #
+      # Returns nothing
+      def no_internet
+        puts "An Internet connection is required to use this command."
+      end
+
       # Public: prints all the commands of boom.
       #
       # Returns nothing.
@@ -86,8 +99,10 @@ module Imgurr
         text = '
           - imgurr: help ---------------------------------------------------
 
-          imgurr upload <image>                    Upload image and copy link to clipboard
+          imgurr help                              This help text
+          imgurr version                           Prints current version
 
+          imgurr upload <image>                    Upload image and copy link to clipboard
 
           all other documentation is located at:
           https://github.com/Chris911/imgurr

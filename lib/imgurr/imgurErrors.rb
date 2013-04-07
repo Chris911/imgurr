@@ -8,17 +8,9 @@ module Imgurr
 	class ImgurErrors
 		class << self
 
-			ERROR_CODES = {
-				400 => 'Missing Parameters',
-				401 => 'Auth Required',
-				403 => 'Forbidden',
-				404 => 'Resource does not exist',
-				429 => 'Rate Limiting',
-				500 => 'Internal Error'
-			}
-
 			def handle_error(response)
-				
+        data = JSON.parse(response)
+        "Imgur Error: #{data['data']['error']} (#{data['status']})"
 			end
 			
 		end
