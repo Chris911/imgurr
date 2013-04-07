@@ -73,10 +73,9 @@ module Imgurup
       # Public: copies a given URL value to the clipboard. This method is
       # designed to handle multiple platforms.
       #
-      # Returns the String value of the Item.
+      # Returns nothing
       def copy(url)
         IO.popen(copy_command,"w") {|cc|  cc.write(url)}
-        item.value
       end
 
       # Public: opens the JSON file in an editor for you to edit. Uses the
@@ -96,7 +95,7 @@ module Imgurup
           system("#{open_command} #{json_file}")
         end
 
-        "Make your edits, and do be sure to save."
+        'Make your edits, and do be sure to save.'
       end
     end
   end

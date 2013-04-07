@@ -10,7 +10,7 @@
 module Imgurup
   class Command
     class << self
-      
+
       # Public: executes a command.
       #
       # args    - The actual commands to operate on. Can be as few as zero
@@ -20,7 +20,7 @@ module Imgurup
         major   = args.shift
         minor   = args.empty? ? nil : args.join(' ')
 
-        return overview unless command
+        return help unless command
         delegate(command, major, minor)
       end
 
@@ -46,36 +46,20 @@ module Imgurup
       #
       # Returns output based on method calls.
       def delegate(command, major, minor)
-        return all               if command == 'all'
-        return edit              if command == 'edit'
         return version           if command == "-v"
         return version           if command == "--version"
         return help              if command == 'help'
         return help              if command[0] == 45 || command[0] == '-' # any - dash options are pleas for help
         return echo(major,minor) if command == 'echo' || command == 'e'
-        return copy(major,minor) if command == 'copy' || command == 'c'
-        return open(major,minor) if command == 'open' || command == 'o'
-        return random(major)     if command == 'random' || command == 'rand' || command == 'r'
+        return upload(major)     if command == 'upload' || command == 'up' || command == 'u'
 
-        # if we're operating on a List
-        if storage.list_exists?(command)
-          return delete_list(command) if major == '--delete'
-          return detail_list(command) unless major
-          unless minor == '--delete'
-            return add_item(command,major,minor) if minor
-            return add_item(command,major,stdin.read) if stdin.stat.size > 0
-            return search_list_for_item(command, major)
-          end
-        end
+      end
 
-        if minor == '--delete' and storage.item_exists?(major)
-          return delete_item(command, major)
-        end
-
-        return search_items(command) if storage.item_exists?(command) and !major
-
-        return create_list(command, major, stdin.read) if !minor && stdin.stat.size > 0
-        return create_list(command, major, minor)
+      # Public: Upload an image to Imgur
+      # 
+      # Returns nothing
+      def upload(major)
+        ImgurAPI.upload(major)
       end
 
       # Public: the version of boom that you're currently running.
@@ -98,6 +82,9 @@ module Imgurup
       def help
         text = %{
           - imgurup: help ---------------------------------------------------
+
+          imgurup upload <image>                    Upload image and copy link to clipboard
+
 
           all other documentation is located at:
           https://github.com/Chris911/imgurup
