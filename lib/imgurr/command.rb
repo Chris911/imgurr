@@ -109,9 +109,10 @@ module Imgurr
           - imgurr: help ---------------------------------------------------
 
           imgurr help                              This help text
-          imgurr version                           Prints current version
+          imgurr version                           Print current version
 
           imgurr upload <image>                    Upload image and copy link to clipboard
+          imgurr info   <id>                       Print image information
 
           all other documentation is located at:
           https://github.com/Chris911/imgurr
