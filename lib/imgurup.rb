@@ -15,6 +15,7 @@ $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 # Internal require
 require 'imgurup/command'
+require 'imgurup/color'
 require 'imgurup/imgurAPI'
 require 'imgurup/platform'
 require 'imgurup/imgurErrors'

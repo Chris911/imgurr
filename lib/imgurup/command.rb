@@ -10,6 +10,7 @@
 module Imgurup
   class Command
     class << self
+      #include Imgurup::Color
 
       # Public: executes a command.
       #
@@ -46,8 +47,8 @@ module Imgurup
       #
       # Returns output based on method calls.
       def delegate(command, major, minor)
-        return version           if command == "-v"
-        return version           if command == "--version"
+        return version           if command == '-v'
+        return version           if command == '--version'
         return help              if command == 'help'
         return help              if command[0] == 45 || command[0] == '-' # any - dash options are pleas for help
         return echo(major,minor) if command == 'echo' || command == 'e'
@@ -82,7 +83,7 @@ module Imgurup
       #
       # Returns nothing.
       def help
-        text = %{
+        text = '
           - imgurup: help ---------------------------------------------------
 
           imgurup upload <image>                    Upload image and copy link to clipboard
@@ -90,7 +91,7 @@ module Imgurup
 
           all other documentation is located at:
           https://github.com/Chris911/imgurup
-        }.gsub(/^ {8}/, '') # strip the first eight spaces of every line
+        '.gsub(/^ {8}/, '') # strip the first eight spaces of every line
 
         output text
       end
