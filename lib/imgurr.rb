@@ -1,7 +1,7 @@
 # coding: utf-8
 
 begin
-	require 'rublsygems'
+	require 'rubygems'
 rescue LoadError
 end
 
