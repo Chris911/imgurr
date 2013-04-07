@@ -10,7 +10,7 @@
 module Imgurr
   class Command
     class << self
-      #include Imgurup::Color
+      #include Imgurr::Color
 
       # Public: executes a command.
       #
@@ -69,14 +69,14 @@ module Imgurr
       #
       # Returns a String identifying the version number.
       def version
-        output "You're running imgurup #{Imgurup::VERSION}."
+        output "You're running imgurr #{Imgurr::VERSION}."
       end
 
       # Public: launches preferences JSON file in an editor for you to edit manually.
       #
       # Returns nothing.
       def edit
-        Platform.edit(account.json_file)
+        #Platform.edit(account.json_file)
       end
 
       # Public: prints all the commands of boom.
@@ -84,13 +84,13 @@ module Imgurr
       # Returns nothing.
       def help
         text = '
-          - imgurup: help ---------------------------------------------------
+          - imgurr: help ---------------------------------------------------
 
-          imgurup upload <image>                    Upload image and copy link to clipboard
+          imgurr upload <image>                    Upload image and copy link to clipboard
 
 
           all other documentation is located at:
-          https://github.com/Chris911/imgurup
+          https://github.com/Chris911/imgurr
         '.gsub(/^ {8}/, '') # strip the first eight spaces of every line
 
         output text

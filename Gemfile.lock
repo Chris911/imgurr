@@ -8,9 +8,11 @@ GEM
   remote: http://rubygems.org/
   specs:
     json (1.7.7)
+    rake (0.9.6)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   imgurr!
+  rake (~> 0.9.2)

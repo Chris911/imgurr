@@ -22,4 +22,5 @@ require 'imgurr/imgurErrors'
 
 module Imgurr
 	VERSION = '0.0.1'
+  DEBUG   = true
 end
