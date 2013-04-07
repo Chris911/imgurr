@@ -73,7 +73,7 @@ module Imgurr
       #
       # Returns a String identifying the version number.
       def version
-        output "You're running imgurr #{Imgurr::VERSION}."
+        puts "You're running imgurr #{Imgurr::VERSION}."
       end
 
       # Public: launches preferences JSON file in an editor for you to edit manually.
