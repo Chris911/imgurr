@@ -118,7 +118,7 @@ module Imgurr
           https://github.com/Chris911/imgurr
         '.gsub(/^ {8}/, '') # strip the first eight spaces of every line
 
-        output text
+        puts text
       end
 
     end
