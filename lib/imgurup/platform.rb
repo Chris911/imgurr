@@ -76,6 +76,7 @@ module Imgurup
       # Returns nothing
       def copy(url)
         IO.popen(copy_command,"w") {|cc|  cc.write(url)}
+        url
       end
 
       # Public: opens the JSON file in an editor for you to edit. Uses the

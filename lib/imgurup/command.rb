@@ -59,7 +59,9 @@ module Imgurup
       # 
       # Returns nothing
       def upload(major)
-        ImgurAPI.upload(major)
+        response = ImgurAPI.upload(major)
+        puts response if response.start_with?('Error')
+        puts "Copied #{Platform.copy(response)} to clipboard" if response.start_with?('http')
       end
 
       # Public: the version of boom that you're currently running.
@@ -69,7 +71,7 @@ module Imgurup
         output "You're running imgurup #{Imgurup::VERSION}."
       end
 
-      # Public: launches prefenences JSON file in an editor for you to edit manually.
+      # Public: launches preferences JSON file in an editor for you to edit manually.
       #
       # Returns nothing.
       def edit

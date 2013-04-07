@@ -41,8 +41,8 @@ module Imgurup
       # 
       def handle_response(response)
         data = JSON.parse(response)
-        puts JSON.pretty_unparse(data)
-        puts "Success with URL #{data['data']['link']}" if(data['success'])
+        #puts JSON.pretty_unparse(data)
+        return data['data']['link'] if(data['success'])
       end
 
     end
