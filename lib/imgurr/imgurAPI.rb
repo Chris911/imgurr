@@ -4,7 +4,7 @@
 # Interface for the Imgur API
 #
 
-module Imgurup
+module Imgurr
   class ImgurAPI
     class << self
       API_URI = URI.parse('https://api.imgur.com')

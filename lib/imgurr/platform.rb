@@ -9,7 +9,7 @@
 #
 # Source: https://github.com/holman/boom
 # 
-module Imgurup
+module Imgurr
   class Platform
     class << self
       # Public: tests if currently running on darwin.

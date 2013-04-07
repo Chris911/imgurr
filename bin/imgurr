@@ -3,6 +3,6 @@
 
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
-require 'imgurup'
+require 'imgurr'
 
-Imgurup::Command.execute(*ARGV)
+Imgurr::Command.execute(*ARGV)

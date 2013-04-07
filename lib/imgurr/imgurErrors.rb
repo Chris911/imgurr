@@ -4,7 +4,7 @@
 # Interface for the Imgur API
 #
 
-module Imgurup
+module Imgurr
 	class ImgurErrors
 		class << self
 

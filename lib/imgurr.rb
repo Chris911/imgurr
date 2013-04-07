@@ -1,7 +1,7 @@
 # coding: utf-8
 
 begin
-	require 'rubygems'
+	require 'rublsygems'
 rescue LoadError
 end
 
@@ -14,12 +14,12 @@ require 'openssl'
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 # Internal require
-require 'imgurup/command'
-require 'imgurup/color'
-require 'imgurup/imgurAPI'
-require 'imgurup/platform'
-require 'imgurup/imgurErrors'
+require 'imgurr/command'
+require 'imgurr/color'
+require 'imgurr/imgurAPI'
+require 'imgurr/platform'
+require 'imgurr/imgurErrors'
 
-module Imgurup
+module Imgurr
 	VERSION = '0.0.1'
 end

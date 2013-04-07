@@ -7,7 +7,7 @@
 # Highly inspired by @holman/boom
 #
 
-module Imgurup
+module Imgurr
   class Command
     class << self
       #include Imgurup::Color

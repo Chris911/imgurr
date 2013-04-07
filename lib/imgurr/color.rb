@@ -1,4 +1,4 @@
-module Imgurup
+module Imgurr
   # Color collects some methods for colorizing terminal output.
   # Thanks to https://github.com/holman
   module Color
