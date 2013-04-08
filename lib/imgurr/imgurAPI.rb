@@ -15,6 +15,13 @@ module Imgurr
         :gallery => '/3/gallery/'
       }
 
+      # Public: accesses the in-memory JSON representation.
+      #
+      # Returns a Storage instance.
+      def storage
+        Boom.storage
+      end
+
       # HTTP Client used for API requests
       # TODO: Confirm SSL Certificate
       def web_client

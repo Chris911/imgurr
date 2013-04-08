@@ -40,7 +40,7 @@ module Imgurr
         return help unless command
         return no_internet       unless self.internet_connection?
 
-        return version           if command == '--version'
+        return version           if command == '--version' || command == '-v' || command == 'version'
         return help              if command == 'help'
         return help              if command[0] == 45 || command[0] == '-' # any - dash options are pleas for help
         return upload(major)     if command == 'upload' || command == 'up' || command == 'u'
