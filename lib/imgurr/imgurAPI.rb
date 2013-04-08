@@ -83,8 +83,8 @@ module Imgurr
             Image ID   : #{data['data']['id']}
             Views      : #{data['data']['views']}
             Bandwidth  : #{Numbers.to_human(data['data']['bandwidth'])}
-            Title      : #{data['data']['title']}
-            Desc       : #{data['data']['description']}
+            Title      : #{'None' unless data['data']['title']}
+            Desc       : #{'None' unless data['data']['description']}
             Animated   : #{data['data']['animated']}
             Width      : #{data['data']['width']} px
             Height     : #{data['data']['height']} px
