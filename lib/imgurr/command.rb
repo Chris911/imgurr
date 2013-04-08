@@ -47,11 +47,12 @@ module Imgurr
         return help unless command
         return no_internet       unless self.internet_connection?
 
-        return version           if command == '--version' || command == '-v' || command == 'version'
-        return help              if command == 'help'
-        return help              if command[0] == 45 || command[0] == '-' # any - dash options are pleas for help
-        return upload(major)     if command == 'upload' || command == 'up' || command == 'u'
-        return info(major)       if command == 'info' || command == 'i'
+        return version             if command == '--version' || command == '-v' || command == 'version'
+        return help                if command == 'help'
+        return help                if command[0] == 45 || command[0] == '-' # any - dash options are pleas for help
+        return upload(major)       if command == 'upload' || command == 'up' || command == 'u'
+        return info(major)         if command == 'info' || command == 'i'
+        return delete(major,minor) if command == 'delete' || command == 'd'
 
       end
 
@@ -75,6 +76,15 @@ module Imgurr
       def info(major)
         response = ImgurAPI.get_info(major)
         puts response
+      end
+
+      # Public: Delete image from imgur
+      #
+      # Returns nothing
+      def delete(major,minor)
+        unless minor
+          puts 'hash found' if storage.hash_exists?(major)
+        end
       end
 
       # Public: the version of boom that you're currently running.
@@ -121,6 +131,8 @@ module Imgurr
 
           imgurr upload <image>                    Upload image and copy link to clipboard
           imgurr info   <id>                       Print image information
+          imgurr delete <id>                       Deletes an image from imgur if the deletehash is found locally
+          imgurr delete <id> <deletehash>          Deletes an image from imgur with the provided deletehash
 
           all other documentation is located at:
           https://github.com/Chris911/imgurr

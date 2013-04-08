@@ -43,13 +43,13 @@ module Imgurr
       @hashes.push(hash_item)
     end
 
-    # Public: tests whether a named List exists.
+    # Public: test whether out storage contains the delete hash for given id
     #
-    # name - the String name of a List
+    # id - ID of the image
     #
     # Returns true if found, false if not.
-    def hash_exists?(delete_hash)
-      @hashes.detect { |hash| hash == delete_hash }
+    def hash_exists?(id)
+      @hashes.detect { |hash| hash[:id] == id }
     end
 
     # Public: all Items in storage.
