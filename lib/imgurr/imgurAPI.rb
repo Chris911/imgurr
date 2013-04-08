@@ -19,7 +19,7 @@ module Imgurr
       #
       # Returns a Storage instance.
       def storage
-        Boom.storage
+        Imgurr.storage
       end
 
       # HTTP Client used for API requests
@@ -65,6 +65,7 @@ module Imgurr
         data = JSON.parse(response)
         puts JSON.pretty_unparse(data) if Imgurr::DEBUG
         if data['success']
+          storage.add_hash(data['data']['id'], data['data']['deletehash'])
           return data['data']['link']
         end
         ImgurErrors.handle_error(response)

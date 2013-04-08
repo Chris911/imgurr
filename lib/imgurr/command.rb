@@ -33,6 +33,13 @@ module Imgurr
         $stdin
       end
 
+      # Public: accesses the in-memory JSON representation.
+      #
+      # Returns a Storage instance.
+      def storage
+        Imgurr.storage
+      end
+
       # Public: allows main access to most commands.
       #
       # Returns output based on method calls.
@@ -59,6 +66,7 @@ module Imgurr
         response = ImgurAPI.upload(major)
         puts response if response.start_with?('Imgur Error')
         puts "Copied #{Platform.copy(response)} to clipboard" if response.start_with?('http')
+        storage.save
       end
 
       # Public: Get image info

@@ -32,6 +32,17 @@ module Imgurr
     # Returns nothing.
     attr_writer :hashes
 
+    # Public: Adds a deletehash to the hashes list
+    #
+    # id   - Image ID
+    # hash - Delete hash
+    #
+    # Returns nothing
+    def add_hash(id, hash)
+      hash_item = {:id => id, :deletehash => hash}
+      @hashes.push(hash_item)
+    end
+
     # Public: tests whether a named List exists.
     #
     # name - the String name of a List
@@ -73,13 +84,11 @@ module Imgurr
     #
     # Returns nothing.
     def populate
-      file = File.new(json_file, 'r')
+      file = File.read(json_file)
       storage = JSON.parse(file)
 
       storage['hashes'].each do |hashes|
-        hashes.each do |id, key|
-          @hashes[id] = key
-        end
+        add_hash(hashes['id'], hashes['deletehash'])
       end
     end
 
@@ -97,7 +106,7 @@ module Imgurr
     #
     # Returns a String Json representation of its Lists and their Items.
     def to_json
-      JSON.generate(to_hash)
+      JSON.pretty_generate(to_hash)
     end
   end
 end
