@@ -94,7 +94,7 @@ module Imgurr
           end
         end
         if ImgurAPI.delete(delete_hash)
-          puts 'Successfully deleted images.'
+          puts 'Successfully deleted image from Imgur'
         else
           puts 'Unauthorized Access. Wrong delete hash?'
         end

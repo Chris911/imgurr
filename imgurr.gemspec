@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'imgurr'
-  s.version     = '0.0.3'
-  s.date        = '2013-04-07'
+  s.version     = '0.0.4'
+  s.date        = '2013-04-11'
   s.summary     = "Imgurr lets you upload images to imgur from the command line"
   s.description = "Imgurr is a ruby gem that lets you upload images to Imgur and manage your account"
   s.authors     = ["Christophe Naud-Dulude"]
