@@ -6,3 +6,5 @@
 rm test/id
 
 git checkout test/files/imgurr.json
+
+export IMGURRFILE=~/.imgurr
