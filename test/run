@@ -3,5 +3,6 @@
 # A shim to run our tests in shell.
 
 ./test/roundup test/*.sh
+rm test/id
 
-git checkout test/files
+git checkout test/files/imgurr.json

@@ -24,7 +24,7 @@ require 'imgurr/command'
 
 module Imgurr
 	VERSION = '0.0.2'
-  DEBUG   = true
+  DEBUG   = false
 
   def self.storage
     @storage ||= Storage.new
