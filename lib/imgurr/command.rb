@@ -82,8 +82,21 @@ module Imgurr
       #
       # Returns nothing
       def delete(major,minor)
-        unless minor
-          puts 'hash found' if storage.hash_exists?(major)
+        if minor
+          delete_hash = minor
+        else
+          if storage.hash_exists?(major)
+            delete_hash = storage.find(major)
+          else
+            puts 'Delete hash not found in storage.'
+            puts 'Use: imgurr delete <id> <delete_hash>'
+            return
+          end
+        end
+        if ImgurAPI.delete(delete_hash)
+          puts 'Successfully deleted images.'
+        else
+          puts 'Unauthorized Access. Wrong delete hash?'
         end
       end
 
@@ -92,13 +105,6 @@ module Imgurr
       # Returns a String identifying the version number.
       def version
         puts "You're running imgurr #{Imgurr::VERSION}."
-      end
-
-      # Public: launches preferences JSON file in an editor for you to edit manually.
-      #
-      # Returns nothing.
-      def edit
-        #Platform.edit(account.json_file)
       end
 
       # Public: Checks is there's an active internet connection

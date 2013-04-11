@@ -57,7 +57,19 @@ module Imgurr
         handle_info_response(response.body)
       end
 
-      # Public: Handle API Response
+      # Public: Upload an image
+      #
+      # args    - The image path for the image to upload
+      #
+      def delete(delete_hash)
+        request  = Net::HTTP::Delete.new(API_URI.request_uri + ENDPOINTS[:image] + delete_hash)
+        request.add_field('Authorization', API_PUBLIC_KEY)
+
+        response = web_client.request(request)
+        handle_delete_response(response.body)
+      end
+
+      # Public: Handle API Response: Uploaded Image
       #
       # args    - Response data
       # 
@@ -71,7 +83,7 @@ module Imgurr
         ImgurErrors.handle_error(response)
       end
 
-      # Public: Handle API Response
+      # Public: Handle API Response: Get image Info
       #
       # args    - Response data
       #
@@ -92,6 +104,16 @@ module Imgurr
           ".gsub(/^ {8}/, '')
         end
         ImgurErrors.handle_error(response)
+      end
+
+      # Public: Handle API Response: Delete Image
+      #
+      # args    - Response data
+      #
+      def handle_delete_response(response)
+        data = JSON.parse(response)
+        puts JSON.pretty_unparse(data) if Imgurr::DEBUG
+        data['success']
       end
 
     end

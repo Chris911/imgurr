@@ -52,6 +52,16 @@ module Imgurr
       @hashes.detect { |hash| hash[:id] == id }
     end
 
+    # Public: finds any given delete_hash by id.
+    #
+    # name - String name of the list to search for
+    #
+    # Returns the first instance of delete_hash that it finds.
+    def find(id)
+      hash = @hashes.find { |hash| hash[:id] == id }
+      hash[:deletehash]
+    end
+
     # Public: all Items in storage.
     #
     # Returns an Array of all Items.
