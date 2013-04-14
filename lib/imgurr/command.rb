@@ -51,6 +51,12 @@ module Imgurr
         return help                if command == 'help'
         return help                if command[0] == 45 || command[0] == '-' # any - dash options are pleas for help
         return upload(major)       if command == 'upload' || command == 'up' || command == 'u'
+
+        # Get image ID from URL
+        if major =~ /.*imgur\.com\/[a-zA-Z0-9]*\.[a-zA-Z]*/
+          major = /com\/[a-zA-Z0-9]*/.match(major).to_s.gsub('com/','')
+        end
+
         return info(major)         if command == 'info' || command == 'i'
         return delete(major,minor) if command == 'delete' || command == 'd'
 
@@ -122,7 +128,7 @@ module Imgurr
       #
       # Returns nothing
       def no_internet
-        puts "An Internet connection is required to use this command."
+        puts 'An Internet connection is required to use this command.'
       end
 
       # Public: prints all the commands of boom.
