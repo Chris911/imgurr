@@ -57,6 +57,8 @@ module Imgurr
           major = /com\/[a-zA-Z0-9]*/.match(major).to_s.gsub('com/','')
         end
 
+        return unless valid_id major
+
         return info(major)         if command == 'info' || command == 'i'
         return delete(major,minor) if command == 'delete' || command == 'd'
 
@@ -129,6 +131,17 @@ module Imgurr
       # Returns nothing
       def no_internet
         puts 'An Internet connection is required to use this command.'
+      end
+
+      # Public: Validate id (major)
+      #
+      # Returns true if valid id
+      def valid_id(major)
+        unless major =~ /^[a-zA-Z0-9]*$/
+          puts "#{major} is not a valid imgur ID or URL"
+          return false
+        end
+        return true
       end
 
       # Public: prints all the commands of boom.
