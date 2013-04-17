@@ -46,6 +46,10 @@ module Imgurr
             version
             quit
           end
+          opts.on('-h', '--help', 'Print Help') do
+            help
+            quit
+          end
         end
         begin
           o.parse!
@@ -56,7 +60,6 @@ module Imgurr
           puts "Error: #{e.message}"
           quit
         end
-
       end
 
       # Public: gets $stdin.
@@ -88,24 +91,23 @@ module Imgurr
         return help unless command
         return no_internet       unless self.internet_connection?
 
-        return help                if command == 'help'  || command == '--help' || command == '-h'
-        return upload(major)       if command == 'upload' || command == 'up' || command == 'u'
-
-
         # Get image ID from URL
         if major
+          return upload(major)       if command == 'upload' || command == 'up' || command == 'u'
+
           if major =~ /.*imgur\.com\/[a-zA-Z0-9]*\.[a-zA-Z]*/
             major = /com\/[a-zA-Z0-9]*/.match(major).to_s.gsub('com/','')
           end
 
           return unless valid_id major
-
           return info(major)         if command == 'info' || command == 'i'
           return delete(major,minor) if command == 'delete' || command == 'd'
-
+        else
+          puts "Argument required for commmand #{command}."
+          puts "imgurr --help for more information."
+          return
         end
       end
-
 
       # Public: Upload an image to Imgur
       # 
@@ -204,8 +206,8 @@ module Imgurr
         text = '
           - imgurr: help ---------------------------------------------------
 
-          imgurr help                              This help text
-          imgurr version                           Print current version
+          imgurr --help                            This help text
+          imgurr --version                         Print current version
 
           imgurr upload <image>                    Upload image and copy link to clipboard
           imgurr upload <image> [-m|--markdown ]   Upload image and copy link to clipboard with markdown syntax
