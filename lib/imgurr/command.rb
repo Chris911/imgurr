@@ -10,6 +10,7 @@
 module Imgurr
   class Command
     class << self
+
       #include Imgurr::Color
 
       # Public: executes a command.
@@ -22,7 +23,22 @@ module Imgurr
         minor   = args.empty? ? nil : args.join(' ')
 
         return help unless command
+        parse_options
         delegate(command, major, minor)
+      end
+
+      # Public: Parse extra options
+      #
+      # returns nothing
+      def parse_options
+        @options = {}
+        @options[:markdown] = false
+        OptionParser.new do |opts|
+          opts.on('-m', '--markdown', 'Use Markdown Syntax') do
+            @options[:markdown] = true
+          end
+
+        end.parse!
       end
 
       # Public: gets $stdin.
@@ -74,7 +90,10 @@ module Imgurr
         end
         response = ImgurAPI.upload(major)
         puts response if response.start_with?('Imgur Error')
-        puts "Copied #{Platform.copy(response)} to clipboard" if response.start_with?('http')
+        if response.start_with?('http')
+          response = "![Screenshot](#{response})" if @options[:markdown]
+          puts "Copied #{Platform.copy(response)} to clipboard"
+        end
         storage.save
       end
 
@@ -155,6 +174,9 @@ module Imgurr
           imgurr version                           Print current version
 
           imgurr upload <image>                    Upload image and copy link to clipboard
+          imgurr upload <image> [-m|--markdown]    Upload image and copy link to clipboard with markdown syntax
+                                [--tile="Title"]   Set image title
+                                [--desc="Desc"]    Set image description
           imgurr info   <id>                       Print image information
           imgurr delete <id>                       Deletes an image from imgur if the deletehash is found locally
           imgurr delete <id> <deletehash>          Deletes an image from imgur with the provided deletehash
