@@ -42,6 +42,10 @@ module Imgurr
           opts.on('-d', '--desc DESC', 'Image Title') do |value|
             options[:desc] = value
           end
+          opts.on('-v', '--version', 'Print Version') do
+            version
+            exit(0)
+          end
         end.parse!
       end
 
@@ -74,22 +78,24 @@ module Imgurr
         return help unless command
         return no_internet       unless self.internet_connection?
 
-        return version             if command == '--version' || command == '-v' || command == 'version'
-        return help                if command == 'help'
-        return help                if command[0] == 45 || command[0] == '-' # any - dash options are pleas for help
+        return help                if command == 'help'  || command == '--help' || command == '-h'
         return upload(major)       if command == 'upload' || command == 'up' || command == 'u'
 
+
         # Get image ID from URL
-        if major =~ /.*imgur\.com\/[a-zA-Z0-9]*\.[a-zA-Z]*/
-          major = /com\/[a-zA-Z0-9]*/.match(major).to_s.gsub('com/','')
+        if major
+          if major =~ /.*imgur\.com\/[a-zA-Z0-9]*\.[a-zA-Z]*/
+            major = /com\/[a-zA-Z0-9]*/.match(major).to_s.gsub('com/','')
+          end
+
+          return unless valid_id major
+
+          return info(major)         if command == 'info' || command == 'i'
+          return delete(major,minor) if command == 'delete' || command == 'd'
+
         end
-
-        return unless valid_id major
-
-        return info(major)         if command == 'info' || command == 'i'
-        return delete(major,minor) if command == 'delete' || command == 'd'
-
       end
+
 
       # Public: Upload an image to Imgur
       # 
@@ -102,7 +108,7 @@ module Imgurr
         response = ImgurAPI.upload(major)
         puts response if response.start_with?('Imgur Error')
         if response.start_with?('http')
-          response = "![Screenshot](#{response})" if options[:markdown]
+          response = "![#{options[:title].nil? ? 'Screenshot' : options[:title]}](#{response})" if options[:markdown]
           puts "Copied #{Platform.copy(response)} to clipboard"
         end
         storage.save
@@ -185,9 +191,9 @@ module Imgurr
           imgurr version                           Print current version
 
           imgurr upload <image>                    Upload image and copy link to clipboard
-          imgurr upload <image> [-m|--markdown]    Upload image and copy link to clipboard with markdown syntax
+          imgurr upload <image> [-m|--markdown ]   Upload image and copy link to clipboard with markdown syntax
                                 [--tile="Title"]   Set image title
-                                [--desc="Desc"]    Set image description
+                                [--desc="Desc" ]   Set image description
           imgurr info   <id>                       Print image information
           imgurr delete <id>                       Deletes an image from imgur if the deletehash is found locally
           imgurr delete <id> <deletehash>          Deletes an image from imgur with the provided deletehash

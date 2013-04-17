@@ -12,3 +12,11 @@ it_uploads_image() {
   chmod 777 ${id_file}
   rm test/temp
 }
+
+it_uploads_image_with_markdown() {
+  ${imgurr} upload ${image} --markdown | grep "Copied !\[Screenshot\](http://i.imgur.com"
+}
+
+it_uploads_image_with_title_desc() {
+  ${imgurr} upload ${image} --title "Test" --desc "Test" | grep "Copied http://i.imgur.com"
+}

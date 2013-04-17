@@ -12,3 +12,11 @@ it_gets_image_info() {
 it_gets_image_info_from_url() {
   ${imgurr} info http://i.imgur.com/2KxrTAK.jpg | grep "Width      : 960 px"
 }
+
+it_gets_image_info_from_url_with_title() {
+  ${imgurr} info http://i.imgur.com/Wk1iPej.jpg | grep "Title      : Imgurr Test"
+}
+
+it_gets_image_info_from_url_with_description() {
+  ${imgurr} info http://i.imgur.com/Wk1iPej.jpg | grep "Desc       : Imgurr Test"
+}
