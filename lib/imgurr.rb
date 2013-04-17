@@ -30,4 +30,8 @@ module Imgurr
   def self.storage
     @storage ||= Storage.new
   end
+
+  def self.options
+    @options ||= {}
+  end
 end

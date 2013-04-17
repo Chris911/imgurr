@@ -22,6 +22,13 @@ module Imgurr
         Imgurr.storage
       end
 
+      # Public: accesses the global options
+      #
+      # Returns Options dictionary
+      def options
+        Imgurr.options
+      end
+
       # HTTP Client used for API requests
       # TODO: Confirm SSL Certificate
       def web_client
@@ -37,6 +44,8 @@ module Imgurr
       # 
       def upload(image_path)
         params   = {:image => File.read(image_path)}
+        params[:title] = options[:title] unless options[:title].nil?
+        params[:description] = options[:desc] unless options[:desc].nil?
         request  = Net::HTTP::Post.new(API_URI.request_uri + ENDPOINTS[:image])
         request.set_form_data(params)
         request.add_field('Authorization', API_PUBLIC_KEY)
@@ -95,8 +104,8 @@ module Imgurr
             Image ID   : #{data['data']['id']}
             Views      : #{data['data']['views']}
             Bandwidth  : #{Numbers.to_human(data['data']['bandwidth'])}
-            Title      : #{'None' unless data['data']['title']}
-            Desc       : #{'None' unless data['data']['description']}
+            Title      : #{data['data']['title'].nil? ? 'None' : data['data']['title']}
+            Desc       : #{data['data']['description'].nil? ? 'None' : data['data']['description']}
             Animated   : #{data['data']['animated']}
             Width      : #{data['data']['width']} px
             Height     : #{data['data']['height']} px

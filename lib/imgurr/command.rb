@@ -31,13 +31,17 @@ module Imgurr
       #
       # returns nothing
       def parse_options
-        @options = {}
-        @options[:markdown] = false
+        options[:markdown] = false
         OptionParser.new do |opts|
           opts.on('-m', '--markdown', 'Use Markdown Syntax') do
-            @options[:markdown] = true
+            options[:markdown] = true
           end
-
+          opts.on('-t', '--title TITLE', 'Image Title') do |value|
+            options[:title] = value
+          end
+          opts.on('-d', '--desc DESC', 'Image Title') do |value|
+            options[:desc] = value
+          end
         end.parse!
       end
 
@@ -54,6 +58,13 @@ module Imgurr
       # Returns a Storage instance.
       def storage
         Imgurr.storage
+      end
+
+      # Public: accesses the global options
+      #
+      # Returns Options dictionary
+      def options
+        Imgurr.options
       end
 
       # Public: allows main access to most commands.
@@ -91,7 +102,7 @@ module Imgurr
         response = ImgurAPI.upload(major)
         puts response if response.start_with?('Imgur Error')
         if response.start_with?('http')
-          response = "![Screenshot](#{response})" if @options[:markdown]
+          response = "![Screenshot](#{response})" if options[:markdown]
           puts "Copied #{Platform.copy(response)} to clipboard"
         end
         storage.save
