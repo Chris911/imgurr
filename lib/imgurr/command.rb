@@ -32,7 +32,7 @@ module Imgurr
       # returns nothing
       def parse_options
         options[:markdown] = false
-        OptionParser.new do |opts|
+        o = OptionParser.new do |opts|
           opts.on('-m', '--markdown', 'Use Markdown Syntax') do
             options[:markdown] = true
           end
@@ -44,9 +44,19 @@ module Imgurr
           end
           opts.on('-v', '--version', 'Print Version') do
             version
-            exit(0)
+            quit
           end
-        end.parse!
+        end
+        begin
+          o.parse!
+        rescue OptionParser::MissingArgument => e
+          puts "Error: #{e.message}"
+          quit
+        rescue OptionParser::InvalidOption => e
+          puts "Error: #{e.message}"
+          quit
+        end
+
       end
 
       # Public: gets $stdin.
@@ -167,6 +177,13 @@ module Imgurr
       # Returns nothing
       def no_internet
         puts 'An Internet connection is required to use this command.'
+      end
+
+      # Public: Quit / Exit program
+      #
+      # Returns nothing
+      def quit
+        exit(1)
       end
 
       # Public: Validate id (major)
