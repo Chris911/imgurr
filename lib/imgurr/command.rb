@@ -88,8 +88,8 @@ module Imgurr
       #
       # Returns output based on method calls.
       def delegate(command, major, minor)
-        return help unless command
-        return no_internet       unless self.internet_connection?
+        return help        unless command
+        return no_internet unless self.internet_connection?
 
         # Get image ID from URL
         if major
@@ -117,9 +117,9 @@ module Imgurr
           puts "File #{major} not found."
           return
         end
-        response = ImgurAPI.upload(major)
-        puts response if response.start_with?('Imgur Error')
-        if response.start_with?('http')
+        response, success = ImgurAPI.upload(major)
+        puts response unless success
+        if success
           response = "![#{options[:title].nil? ? 'Screenshot' : options[:title]}](#{response})" if options[:markdown]
           puts "Copied #{Platform.copy(response)} to clipboard"
         end

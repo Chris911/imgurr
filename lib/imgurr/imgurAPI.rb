@@ -87,9 +87,9 @@ module Imgurr
         puts JSON.pretty_unparse(data) if Imgurr::DEBUG
         if data['success']
           storage.add_hash(data['data']['id'], data['data']['deletehash'])
-          return data['data']['link']
+          return [data['data']['link'], true]
         end
-        ImgurErrors.handle_error(response)
+        [ImgurErrors.handle_error(response), false]
       end
 
       # Public: Handle API Response: Get image Info
