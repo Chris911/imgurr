@@ -116,7 +116,7 @@ module Imgurr
       end
 
       # Public: Upload an image to Imgur
-      # 
+      #
       # Returns nothing
       def upload(major)
         unless File.exist?(major)
@@ -226,7 +226,9 @@ module Imgurr
           imgurr --version                         Print current version
 
           imgurr upload <image>                    Upload image and copy link to clipboard
-          imgurr upload <image> [-m|--markdown ]   Upload image and copy link to clipboard with markdown syntax
+          imgurr upload <image> [-m | --markdown]  Upload image and copy link to clipboard with markdown syntax
+                                [-l | --html]      Upload image and copy link to clipboard with HTML syntax
+                                [--size=SIZE]      Set image size ratio
                                 [--tile="Title"]   Set image title
                                 [--desc="Desc" ]   Set image description
           imgurr info   <id>                       Print image information
