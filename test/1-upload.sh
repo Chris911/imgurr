@@ -18,11 +18,11 @@ it_uploads_image_with_markdown() {
 }
 
 it_uploads_image_with_html() {
-  ${imgurr} upload ${image} --html | grep "Copied <img src=\"http://i.imgur.com/YUVgBrQ.jpg\" alt=\"Screenshot\">"
+  ${imgurr} upload ${image} --html | grep "Copied <img src=\"http://i.imgur.com/.*\" alt=\"Screenshot\">"
 }
 
 it_uploads_image_with_html_and_size() {
-  ${imgurr} upload ${image} --html --size 45 | grep "Copied <img src=\"http://i.imgur.com/rBgFoWB.jpg\" alt=\"Screenshot\" width=\"45%\">"
+  ${imgurr} upload ${image} --html --size 45 | grep "Copied <img src=\"http://i.imgur.com/.*\" alt=\"Screenshot\" width=\"45%\">"
 }
 
 it_uploads_image_with_title_desc() {
