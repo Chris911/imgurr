@@ -36,6 +36,12 @@ module Imgurr
           opts.on('-m', '--markdown', 'Use Markdown Syntax') do
             options[:markdown] = true
           end
+          opts.on('-l', '--html', 'Use HTML Syntax') do
+            options[:html] = true
+          end
+          opts.on('-s', '--size PERCENTAGE', 'Image Size') do |value|
+            options[:size] = value
+          end
           opts.on('-t', '--title TITLE', 'Image Title') do |value|
             options[:title] = value
           end
@@ -121,9 +127,19 @@ module Imgurr
         puts response unless success
         if success
           response = "![#{options[:title].nil? ? 'Screenshot' : options[:title]}](#{response})" if options[:markdown]
+          response = build_HTML_response(response) if options[:html]
           puts "Copied #{Platform.copy(response)} to clipboard"
         end
         storage.save
+      end
+
+      # Public: build HTML image tag response
+      #
+      # Returns a properly formatted HTML <img> tag
+      def build_HTML_response(response)
+        return "<img src=\"#{response}\" alt=\"#{options[:title].nil? ? 'Screenshot' : options[:title]}\">" if options[:size].nil?
+
+        "<img src=\"#{response}\" alt=\"#{options[:title].nil? ? 'Screenshot' : options[:title]}\" width=\"#{options[:size]}%\">"
       end
 
       # Public: Get image info
