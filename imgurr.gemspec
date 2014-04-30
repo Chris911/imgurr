@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'imgurr'
-  s.version     = '0.1.1'
+  s.version     = '0.1.2'
   s.summary     = "Imgurr lets you upload images to imgur from the command line"
   s.description = "Imgurr is a ruby gem that lets you upload images to Imgur and manage your account"
   s.authors     = ["Christophe Naud-Dulude"]
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.executables = ["imgurr"]
   s.default_executable = 'imgurr'
 
-  s.add_dependency('json', "~> 1.7.0")
+  s.add_dependency('json')
 
   s.add_development_dependency('rake', "~> 0.9.2")
 

@@ -24,7 +24,7 @@ require 'imgurr/imgurErrors'
 require 'imgurr/command'
 
 module Imgurr
-	VERSION = '0.1.1'
+  VERSION = '0.1.2'
   DEBUG   = false
 
   def self.storage

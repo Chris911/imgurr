@@ -1,13 +1,13 @@
 PATH
   remote: .
   specs:
-    imgurr (0.1.0)
-      json (~> 1.7.0)
+    imgurr (0.1.2)
+      json
 
 GEM
   remote: http://rubygems.org/
   specs:
-    json (1.7.7)
+    json (1.8.1)
     rake (0.9.6)
 
 PLATFORMS
