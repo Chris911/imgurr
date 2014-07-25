@@ -139,19 +139,21 @@ module Imgurr
       # Note: Only supported on OS X for now
       # Returns nothing
       def capture
-        if Platform.darwin?
+        unless Platform.darwin?
           puts "Capture command is only supported on OS X for the time being."
           return
         end
-        %x( screencapture -W ~/.imgurr.temp.png )
-        imgage_path = "#{ENV['HOME']}/.imgurr.temp.png"
+
+        image_path = "#{ENV['HOME']}/.imgurr.temp.png"
+        Platform.capture('-W', image_path)
+
         # User might have canceled or it takes some time to write to disk.
         # Check up to 3 times with 1 sec delay
         3.times do
-          if File.exist?(imgage_path)
+          if File.exist?(image_path)
             puts "Uploading screenshot..."
-            upload(imgage_path)
-            File.delete(imgage_path)
+            upload(image_path)
+            File.delete(image_path)
             break
           end
           sleep(1)

@@ -8,7 +8,7 @@
 # clipboard, pasteboard, or whatever they decide to call it.
 #
 # Source: https://github.com/holman/boom
-# 
+#
 module Imgurr
   class Platform
     class << self
@@ -37,7 +37,7 @@ module Imgurr
       def open_command
         if darwin?
           'open'
-        elsif windows? 
+        elsif windows?
           'start'
         else
           'xdg-open'
@@ -69,7 +69,7 @@ module Imgurr
           'xclip -selection clipboard'
         end
       end
-      
+
       # Public: copies a given URL value to the clipboard. This method is
       # designed to handle multiple platforms.
       #
@@ -77,6 +77,20 @@ module Imgurr
       def copy(url)
         IO.popen(copy_command,"w") {|cc|  cc.write(url)}
         url
+      end
+
+      # Public: returns the command used to capture a screenshot
+      #
+      def capture_command
+        if darwin?
+          'screencapture'
+        end
+      end
+
+      # Public: captures a screenshot and saves to `output`
+      #
+      def capture(args, output)
+        system("#{capture_command} #{args} #{output}")
       end
 
       # Public: opens the JSON file in an editor for you to edit. Uses the
