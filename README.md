@@ -8,7 +8,7 @@ Command line utility for Imgur in Ruby. Imgurr lets you quickly upload images, g
 ## Usage
 
 ![](http://i.imgur.com/rGoGCNb.png)
-
+#### Examples
     $ imgurr capture
     Uploading screenshot...
     Copied http://i.imgur.com/rGoGCNb.png to clipboard
