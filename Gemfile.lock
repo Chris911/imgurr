@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    imgurr (0.1.2)
+    imgurr (0.2.0)
       json
 
 GEM
