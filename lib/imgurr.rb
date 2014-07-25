@@ -1,7 +1,7 @@
 # coding: utf-8
 
 begin
-	require 'rubygems'
+  require 'rubygems'
 rescue LoadError
 end
 
@@ -24,7 +24,7 @@ require 'imgurr/imgurErrors'
 require 'imgurr/command'
 
 module Imgurr
-  VERSION = '0.1.2'
+  VERSION = '0.2.0'
   DEBUG   = false
 
   def self.storage
