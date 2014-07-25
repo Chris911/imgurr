@@ -96,11 +96,12 @@ module Imgurr
       def delegate(command, major, minor)
         return help        unless command
         return no_internet unless self.internet_connection?
+        return capture     if command == 'capture' || command == 'cap'
 
-        # Get image ID from URL
         if major
           return upload(major)       if command == 'upload' || command == 'up' || command == 'u'
 
+          # Get image ID from URL
           if major =~ /.*imgur\.com\/[a-zA-Z0-9]*\.[a-zA-Z]*/
             major = /com\/[a-zA-Z0-9]*/.match(major).to_s.gsub('com/','')
           end
@@ -131,6 +132,30 @@ module Imgurr
           puts "Copied #{Platform.copy(response)} to clipboard"
         end
         storage.save
+      end
+
+      # Public: Capture and image and upload to imgur
+      #
+      # Note: Only supported on OS X for now
+      # Returns nothing
+      def capture
+        if Platform.darwin?
+          puts "Capture command is only supported on OS X for the time being."
+          return
+        end
+        %x( screencapture -W ~/.imgurr.temp.png )
+        imgage_path = "#{ENV['HOME']}/.imgurr.temp.png"
+        # User might have canceled or it takes some time to write to disk.
+        # Check up to 3 times with 1 sec delay
+        3.times do
+          if File.exist?(imgage_path)
+            puts "Uploading screenshot..."
+            upload(imgage_path)
+            File.delete(imgage_path)
+            break
+          end
+          sleep(1)
+        end
       end
 
       # Public: build HTML image tag response
@@ -231,6 +256,7 @@ module Imgurr
                                 [--size=SIZE]      Set image size ratio
                                 [--tile="Title"]   Set image title
                                 [--desc="Desc" ]   Set image description
+          imgurr capture                           Capture a screenshot and upload it (OS X only)
           imgurr info   <id>                       Print image information
           imgurr delete <id>                       Deletes an image from imgur if the deletehash is found locally
           imgurr delete <id> <deletehash>          Deletes an image from imgur with the provided deletehash
