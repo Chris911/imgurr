@@ -53,12 +53,19 @@
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p><img src="http://i.imgur.com/baqLV1p.png" alt=""></p>
+<p><img src="http://i.imgur.com/rGoGCNb.png" alt=""></p>
 
-<pre><code>imgurr upload image.jpg
+<h4>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h4>
+
+<pre><code>$ imgurr capture
+Uploading screenshot...
+Copied http://i.imgur.com/rGoGCNb.png to clipboard
+
+$ imgurr upload image.jpg
 Copied http://i.imgur.com/PLWGJlc.gif to clipboard
 
-imgurr upload image.jpg --markdown
+$ imgurr upload image.jpg --markdown
 Copied ![Screenshot](http://i.imgur.com/PLWGJlc.gif) to clipboard
 
 imgurr info 2KxrTAK
@@ -72,7 +79,7 @@ imgurr info 2KxrTAK
     Height     : 540 px
     Link       : http://i.imgur.com/2KxrTAK.jpg
 
-imgurr delete http://i.imgur.com/2KxrTAK.jpg
+$ imgurr delete http://i.imgur.com/2KxrTAK.jpg
 Successfully deleted image from Imgur
 
 ./imgurr --help for more.
@@ -92,7 +99,7 @@ Successfully deleted image from Imgur
 <li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
 <li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
 <li>Create new Pull Request</li>
-</ol><p>Don't forget to add a test for any new feature. </p>
+</ol><p>Don't forget to add a test for any new feature.</p>
       </section>
 
     </div>
