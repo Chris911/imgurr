@@ -13,13 +13,13 @@ Command line utility for Imgur in Ruby. Imgurr lets you quickly upload images, g
     Uploading screenshot...
     Copied http://i.imgur.com/rGoGCNb.png to clipboard
 
-    $ imgurr upload image.jpg
+    $ imgurr upload image.gif
     Copied http://i.imgur.com/PLWGJlc.gif to clipboard
 
     $ imgurr upload image.jpg --markdown
     Copied ![Screenshot](http://i.imgur.com/PLWGJlc.gif) to clipboard
 
-    imgurr info 2KxrTAK
+    $ imgurr info 2KxrTAK
         Image ID   : 2KxrTAK
         Views      : 14717
         Bandwidth  : 2.296 GiB
