@@ -110,6 +110,8 @@ module Imgurr
           return info(major)         if command == 'info' || command == 'i'
           return delete(major,minor) if command == 'delete' || command == 'd'
         else
+          return list                if command == 'list' || command == 'l'
+
           puts "Argument required for commmand #{command}."
           puts "imgurr --help for more information."
           return
@@ -124,6 +126,7 @@ module Imgurr
           puts "File #{major} not found."
           return
         end
+        major = File.absolute_path(major)
         response, success = ImgurAPI.upload(major)
         puts response unless success
         if success
@@ -160,6 +163,21 @@ module Imgurr
         end
       end
 
+      # Public: List uploaded images
+      #
+      # Returns nothing
+      def list
+        items = storage.items
+        if items.empty?
+          puts 'No items in the list.'
+          return
+        end
+
+        storage.items.each do |(id, data)|
+          puts "#{id}  #{data[:stamp]}  #{data[:source].ljust(48)}"
+        end
+      end
+
       # Public: build HTML image tag response
       #
       # Returns a properly formatted HTML <img> tag
@@ -181,6 +199,7 @@ module Imgurr
       #
       # Returns nothing
       def delete(major,minor)
+        major = major.to_sym
         if minor
           delete_hash = minor
         else
@@ -194,6 +213,8 @@ module Imgurr
         end
         if ImgurAPI.delete(delete_hash)
           puts 'Successfully deleted image from Imgur'
+          storage.delete(major)
+          storage.save
         else
           puts 'Unauthorized Access. Wrong delete hash?'
         end
@@ -259,6 +280,7 @@ module Imgurr
                                 [--tile="Title"]   Set image title
                                 [--desc="Desc" ]   Set image description
           imgurr capture                           Capture a screenshot and upload it (OS X only)
+          imgurr list                              List uploaded images
           imgurr info   <id>                       Print image information
           imgurr delete <id>                       Deletes an image from imgur if the deletehash is found locally
           imgurr delete <id> <deletehash>          Deletes an image from imgur with the provided deletehash
