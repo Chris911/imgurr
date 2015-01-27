@@ -19,7 +19,7 @@ module Imgurr
     #
     # Returns the Storage instance.
     def initialize
-      @hashes = []
+      @hashes = Hash.new
       bootstrap
       populate
     end
@@ -38,9 +38,8 @@ module Imgurr
     # hash - Delete hash
     #
     # Returns nothing
-    def add_hash(id, hash)
-      hash_item = {:id => id, :deletehash => hash}
-      @hashes.push(hash_item)
+    def add_hash(id, hash, source)
+      @hashes[id] = {:deletehash => hash, :source => source, :stamp => Time.now}
     end
 
     # Public: test whether out storage contains the delete hash for given id
@@ -49,7 +48,7 @@ module Imgurr
     #
     # Returns true if found, false if not.
     def hash_exists?(id)
-      @hashes.detect { |hash| hash[:id] == id }
+      @hashes.has_key? id
     end
 
     # Public: finds any given delete_hash by id.
@@ -58,15 +57,22 @@ module Imgurr
     #
     # Returns the first instance of delete_hash that it finds.
     def find(id)
-      hash = @hashes.find { |hash| hash[:id] == id }
-      hash[:deletehash]
+      hash = @hashes[id]
+      hash ? hash[:deletehash] : nil
     end
 
-    # Public: all Items in storage.
+    # Public: all Items in storage sorted in chronological order.
     #
     # Returns an Array of all Items.
     def items
-      @hashes.collect(&:items).flatten
+      @hashes.to_a.sort {|(_, a), (_, b)| a[:stamp] <=> b[:stamp] }
+    end
+
+    # Public: delete an Item entry from storage.
+    #
+    # Returns the deleted Item or nil.
+    def delete(id)
+      @hashes.delete(id)
     end
 
     # Public: creates a Hash of the representation of the in-memory data
@@ -75,7 +81,7 @@ module Imgurr
     #
     # Returns a Hash of the entire data set.
     def to_hash
-      { :hashes => @hashes.collect(&:to_hash) }
+      {:hashes => @hashes}
     end
 
     # Takes care of bootstrapping the Json file, both in terms of creating the
@@ -92,14 +98,15 @@ module Imgurr
     # Take a JSON representation of data and explode it out into the constituent
     # Lists and Items for the given Storage instance.
     #
-    # Returns nothing.
+    # Returns all hashes.
     def populate
       file = File.read(json_file)
-      storage = JSON.parse(file)
+      storage = JSON.parse(file, :symbolize_names => true)
 
-      storage['hashes'].each do |hashes|
-        add_hash(hashes['id'], hashes['deletehash'])
-      end
+      @hashes = storage[:hashes]
+      convert if @hashes.is_a? Array
+
+      @hashes
     end
 
     # Public: persists your in-memory objects to disk in Json format.
@@ -117,6 +124,20 @@ module Imgurr
     # Returns a String Json representation of its Lists and their Items.
     def to_json
       JSON.pretty_generate(to_hash)
+    end
+
+    private
+    # Private: convert from old Json representation, filling in the missing data.
+    # Also print a warning message for the user.
+    #
+    # Returns nothing.
+    def convert
+      old = @hashes
+      @hashes = Hash.new
+
+      puts 'Warning: old JSON format detected, converting.'
+      old.each {|i| add_hash(i[:id], i[:deletehash], 'unknown') }
+      save
     end
   end
 end

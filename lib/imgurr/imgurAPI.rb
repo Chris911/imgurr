@@ -51,7 +51,7 @@ module Imgurr
         request.add_field('Authorization', API_PUBLIC_KEY)
 
         response = web_client.request(request)
-        handle_upload_response(response.body)
+        handle_upload_response(response.body, image_path)
       end
 
       # Public: Get info about an image
@@ -82,11 +82,11 @@ module Imgurr
       #
       # args    - Response data
       # 
-      def handle_upload_response(response)
+      def handle_upload_response(response, source_path)
         data = JSON.parse(response)
         puts JSON.pretty_unparse(data) if Imgurr::DEBUG
         if data['success']
-          storage.add_hash(data['data']['id'], data['data']['deletehash'])
+          storage.add_hash(data['data']['id'], data['data']['deletehash'], source_path)
           return [data['data']['link'], true]
         end
         [ImgurErrors.handle_error(response), false]
