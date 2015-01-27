@@ -104,6 +104,9 @@ module Imgurr
       storage = JSON.parse(file, :symbolize_names => true)
 
       @hashes = storage[:hashes]
+      convert if @hashes.is_a? Array
+
+      @hashes
     end
 
     # Public: persists your in-memory objects to disk in Json format.
@@ -121,6 +124,20 @@ module Imgurr
     # Returns a String Json representation of its Lists and their Items.
     def to_json
       JSON.pretty_generate(to_hash)
+    end
+
+    private
+    # Private: convert from old Json representation, filling in the missing data.
+    # Also print a warning message for the user.
+    #
+    # Returns nothing.
+    def convert
+      old = @hashes
+      @hashes = Hash.new
+
+      puts 'Warning: old JSON format detected, converting.'
+      old.each {|i| add_hash(i[:id], i[:deletehash], 'unknown') }
+      save
     end
   end
 end

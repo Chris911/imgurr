@@ -5,5 +5,6 @@
 ./test/roundup test/*.sh
 rm test/id
 rm test/files/imgurr.json
+git checkout -- test/files/imgurr-old.json
 
 export IMGURRFILE=~/.imgurr
