@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'imgurr'
-  s.version     = '0.2.0'
+  s.version     = '1.0.0'
   s.summary     = "Imgurr lets you upload images to imgur from the command line"
   s.description = "Imgurr is a ruby gem that lets you upload images to Imgur and manage your account"
   s.authors     = ["Christophe Naud-Dulude"]
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
 
   s.license = 'MIT'
 
-  s.files             = %w( README.md LICENSE.md Gemfile Gemfile.lock imgurr.gemspec Rakefile)
+  s.files             = %w( README.md LICENSE.md Gemfile imgurr.gemspec Rakefile)
   s.files            += Dir.glob("lib/**/*")
   s.files            += Dir.glob("bin/**/*")
   s.files            += Dir.glob("test/**/*")
