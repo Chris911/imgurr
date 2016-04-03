@@ -73,10 +73,14 @@ module Imgurr
       # Public: copies a given URL value to the clipboard. This method is
       # designed to handle multiple platforms.
       #
-      # Returns nothing
+      # Returns success of command
       def copy(url)
-        IO.popen(copy_command,"w") {|cc|  cc.write(url)}
-        url
+        begin
+          IO.popen(copy_command,"w") {|cc| cc.write(url)}
+          true
+        rescue
+          false
+        end
       end
 
       # Public: returns the command used to capture a screenshot

@@ -132,7 +132,8 @@ module Imgurr
         if success
           response = "![#{options[:title].nil? ? 'Screenshot' : options[:title]}](#{response})" if options[:markdown]
           response = build_HTML_response(response) if options[:html]
-          puts "Copied #{Platform.copy(response)} to clipboard"
+          copy_succeeded = Platform.copy(response)
+          puts copy_succeeded ? "Copied #{response} to clipboard" : "Image url: #{response}"
         end
         storage.save
       end
